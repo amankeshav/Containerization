@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker Project — Keshav Kumar</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --border: #e8e5e0;
+    --text: #1c1917;
+    --muted: #78716c;
+    --accent: #2563eb;
+    --red: #dc2626;
+    --teal: #0d9488;
+    --amber: #d97706;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .logo-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .header-link {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .header-link:hover { color: var(--text); border-color: #c4bfbb; }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2.5rem 4rem;
+    max-width: 740px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 14.5px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .author-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px 12px 4px 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .author-avatar {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb 0%, #0d9488 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: #fff;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0;
+    flex-shrink: 0;
+  }
+
+  .meta-sep {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  .meta-pill {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* MAIN */
+  .main-wrap {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  .section { margin-bottom: 3rem; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* LINK CARDS */
+  .link-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .link-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+
+  .link-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 10px 10px 0 0;
+    background: var(--c);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .link-card:hover { border-color: #c4bfbb; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  .link-card:hover::after { opacity: 1; }
+
+  .link-card.blue  { --c: var(--accent); }
+  .link-card.red   { --c: var(--red); }
+  .link-card.teal  { --c: var(--teal); }
+  .link-card.amber { --c: var(--amber); }
+
+  .card-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c);
+  }
+
+  .card-name { font-size: 13.5px; font-weight: 500; color: var(--text); }
+  .card-hint { font-size: 12px; font-weight: 300; color: var(--muted); line-height: 1.5; }
+  .card-arrow { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+
+  /* TOC */
+  .toc-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .toc-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+  }
+
+  .toc-row:last-child { border-bottom: none; }
+  .toc-row:hover { background: #faf9f7; }
+
+  .toc-n {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--accent);
+    text-align: right;
+    font-weight: 500;
+  }
+
+  .toc-name { font-size: 13.5px; font-weight: 500; color: var(--text); }
+  .toc-desc { font-size: 11.5px; color: var(--muted); font-weight: 300; margin-top: 1px; }
+  .toc-caret { color: var(--border); font-size: 13px; }
+
+  /* STEPS */
+  .steps-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .step-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .step-row:last-child { border-bottom: none; }
+
+  .step-n {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--muted);
+    width: 20px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+
+  .step-title { font-size: 13.5px; font-weight: 500; margin-bottom: 3px; }
+
+  .step-body {
+    font-size: 12.5px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .step-body code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: #f5f4f2;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1px 5px;
+    color: var(--text);
+  }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 10px;
+    background: var(--surface);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .tag:hover { color: var(--text); border-color: #c4bfbb; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    background: var(--surface);
+  }
+
+  .footer-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 14.5px;
+    color: var(--text);
+  }
+
+  .footer-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .footer-right {
+    font-size: 11.5px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .footer-right a { color: var(--muted); text-decoration: none; }
+  .footer-right a:hover { color: var(--text); }
+
+  @media (max-width: 580px) {
+    .hero { padding: 3.5rem 1.5rem 3rem; }
+    .main-wrap { padding: 2.5rem 1.5rem 4rem; }
+    .link-grid { grid-template-columns: 1fr; }
+    header { padding: 0 1.5rem; }
+    footer { padding: 1.25rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">
+    <div class="logo-dot"></div>
+    docker-project
+  </a>
+  <a class="header-link" href="https://github.com/itzmayank01/Project-Assignment-1/tree/main" target="_blank">↗ GitHub</a>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Project Assignment · March 2026</div>
+  <h1>Containerized Web App<br>with <em>PostgreSQL</em></h1>
+  <p class="hero-sub">Docker Compose · Multi-Stage Builds · IPvlan &amp; Macvlan Networking · Volume Persistence</p>
+
+  <div class="hero-meta">
+    <div class="author-badge">
+      <div class="author-avatar">KK</div>
+      Keshav Kumar
+    </div>
+    <div class="meta-sep"></div>
+    <span class="meta-pill">Docker Compose</span>
+    <div class="meta-sep"></div>
+    <span class="meta-pill">PostgreSQL 15</span>
+    <div class="meta-sep"></div>
+    <span class="meta-pill">Node.js + Express</span>
+  </div>
+</div>
+
+<div class="main-wrap">
+
+  <div class="section">
+    <div class="section-label">Quick Access</div>
+    <div class="link-grid">
+      <a class="link-card blue" href="https://github.com/itzmayank01/Project-Assignment-1/tree/main" target="_blank">
+        <div class="card-type">Repository</div>
+        <div class="card-name">GitHub Source Code</div>
+        <div class="card-hint">Dockerfiles, compose config, backend, database scripts &amp; screenshots.</div>
+        <div class="card-arrow">↗ Open Repo</div>
+      </a>
+      <a class="link-card red" href="https://github.com/itzmayank01/Project-Assignment-1/blob/main/Docker_Project_Report.pdf" target="_blank">
+        <div class="card-type">Document</div>
+        <div class="card-name">PDF Report</div>
+        <div class="card-hint">Full formatted report with diagrams, screenshots and analysis.</div>
+        <div class="card-arrow">↗ Open PDF</div>
+      </a>
+      <a class="link-card teal" href="https://github.com/itzmayank01/Project-Assignment-1/blob/main/REPORT.md" target="_blank">
+        <div class="card-type">Markdown</div>
+        <div class="card-name">REPORT.md</div>
+        <div class="card-hint">Readable on GitHub — all sections formatted inline.</div>
+        <div class="card-arrow">↗ Read Report</div>
+      </a>
+      <a class="link-card amber" href="https://github.com/itzmayank01/Project-Assignment-1/tree/main/Screenshots" target="_blank">
+        <div class="card-type">Evidence</div>
+        <div class="card-name">Screenshots</div>
+        <div class="card-hint">Container IPs, network inspect, volume persistence — visual proof.</div>
+        <div class="card-arrow">↗ View Screenshots</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Report Contents</div>
+    <div class="toc-list">
+      <div class="toc-row"><div class="toc-n">01</div><div><div class="toc-name">Introduction</div><div class="toc-desc">Project overview, goals, and two-service architecture</div></div><div class="toc-caret">›</div></div>
+      <div class="toc-row"><div class="toc-n">02</div><div><div class="toc-name">System Architecture</div><div class="toc-desc">Backend + PostgreSQL design with Docker Compose</div></div><div class="toc-caret">›</div></div>
+      <div class="toc-row"><div class="toc-n">03</div><div><div class="toc-name">Multi-Stage Build Optimization</div><div class="toc-desc">Reducing image size from ~900 MB to ~150 MB</div></div><div class="toc-caret">›</div></div>
+      <div class="toc-row"><div class="toc-n">04</div><div><div class="toc-name">Network Design</div><div class="toc-desc">Bridge, IPvlan, and Macvlan — setup and comparison</div></div><div class="toc-caret">›</div></div>
+      <div class="toc-row"><div class="toc-n">05</div><div><div class="toc-name">Image Size Comparison</div><div class="toc-desc">Before/after metrics for multi-stage optimization</div></div><div class="toc-caret">›</div></div>
+      <div class="toc-row"><div class="toc-n">06</div><div><div class="toc-name">Macvlan vs IPvlan</div><div class="toc-desc">Side-by-side feature and use-case analysis</div></div><div class="toc-caret">›</div></div>
+      <div class="toc-row"><div class="toc-n">07</div><div><div class="toc-name">Volume Persistence</div><div class="toc-desc">Data surviving container restarts with named volumes</div></div><div class="toc-caret">›</div></div>
+      <div class="toc-row"><div class="toc-n">08</div><div><div class="toc-name">Conclusion</div><div class="toc-desc">Key outcomes and learnings from the project</div></div><div class="toc-caret">›</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">How to Access Files</div>
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-n">01</div>
+        <div>
+          <div class="step-title">Open the PDF Report</div>
+          <div class="step-body">Click <strong>PDF Report</strong> above — opens in browser. Save with <code>Ctrl+S</code> or <code>Cmd+S</code>.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-n">02</div>
+        <div>
+          <div class="step-title">Read the Markdown Report</div>
+          <div class="step-body">Click <strong>REPORT.md</strong> — opens formatted directly on GitHub. No download needed.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-n">03</div>
+        <div>
+          <div class="step-title">Browse Source Code</div>
+          <div class="step-body">Click <strong>GitHub Source Code</strong> to explore Dockerfiles, compose config, backend code, and screenshots.</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-n">04</div>
+        <div>
+          <div class="step-title">Run It Locally</div>
+          <div class="step-body">Clone the repo and run <code>docker compose up --build</code> — app starts at <code>localhost:3000</code>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Technologies Used</div>
+    <div class="tags">
+      <span class="tag">Docker</span>
+      <span class="tag">Docker Compose</span>
+      <span class="tag">PostgreSQL 15</span>
+      <span class="tag">Node.js 18</span>
+      <span class="tag">Express.js</span>
+      <span class="tag">Multi-Stage Build</span>
+      <span class="tag">IPvlan</span>
+      <span class="tag">Macvlan</span>
+      <span class="tag">Volume Persistence</span>
+      <span class="tag">REST API</span>
+      <span class="tag">Alpine Linux</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-name"><em>Keshav Kumar</em> — Docker Project Report</div>
+  <div class="footer-right">
+    Containerization &amp; Orchestration · March 2026 ·
+    <a href="https://github.com/itzmayank01/Project-Assignment-1/tree/main" target="_blank">GitHub ↗</a>
+  </div>
+</footer>
+
+</body>
+</html>
